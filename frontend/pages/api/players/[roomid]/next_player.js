@@ -1,5 +1,5 @@
 //get first player
-import { getFirstPlayer } from "../../../../script/playersServices/playersServices"
+import { getNextPlayer } from "../../../../script/playersServices/playersServices"
 //get player profil
 export default async function profil(req, res) {
   const { method, query, body } = req;
@@ -9,7 +9,7 @@ export default async function profil(req, res) {
 
         try{
 
-            const player = await getFirstPlayer(query.roomid);
+            const player = await getNextPlayer(query.roomid);
             res.status(200).json({ player});
         }
       catch(e){

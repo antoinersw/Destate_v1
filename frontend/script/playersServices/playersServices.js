@@ -1,17 +1,17 @@
 const chalk = require("chalk");
-const random = require("../../script/utils/random");
-const { v4: uuidv4 } = require('uuid');
+const random = require("../utils/random");
+const { v4: uuidv4 } = require("uuid");
 //optimization ideas
 //populate rooms & players
 
 //Mongoose Schema
 const roomsModel = require("../../schema/roomsSchema");
 //
-const dbConnect = require("../../script/utils/dbConnect");
-const board = require("../boardServices/boardServices.js");
+const dbConnect = require("../utils/dbConnect");
+const room = require("../roomsService/roomsService");
 
 //Get
-  //OK
+//OK
 const getProfils = async (roomid) => {
   try {
     const query = { roomid };
@@ -24,7 +24,7 @@ const getProfils = async (roomid) => {
     return err;
   }
 };
-  //OK
+//OK
 const getProfilbyUserId = async (roomid, userId) => {
   try {
     const room = { roomid };
@@ -59,38 +59,42 @@ const getNextPlayer = async (roomid, playerTurn) => {
 //ok
 const getPlayerState = async (roomid, userId) => {
   const profil = await getProfilbyUserId(roomid, userId);
-  const square = await board.getSquareByPos(roomid,profil.pos);
+  const square = await room.getSquareByPos(roomid, profil.pos);
 
-  const result = [profil,square];
+  const result = [profil, square];
   return result;
 };
 
+//ok
 const getFirstPlayer = async (roomid) => {
   const profils = await getProfils(roomid);
   const askFirstPlayer = profils.find((f) => f.order === 0);
   return askFirstPlayer;
 };
 
+//Useful ?
 const getPlayerSquareByPos = async (roomid, userId) => {
   const profil = await getProfilbyUserId(roomid, userId);
   const position = profil.pos;
-  const square = await board.getSquareByPos(position);
+  const square = await room.getSquareByPos(position);
   return square;
 };
 
-
+// referenced in passTurn() //actionsServices
 const updateNextPlayerTurn = async (roomid, askNextPlayer) => {
   id = { roomid, "players.userId": askNextPlayer.userId };
   fields = { $set: { "players.$.next": true, "players.$.rolled": false } };
   const update = await roomsModel.updateOne(id, fields);
 };
 
+// referenced in passTurn() //actionsServices
 const updateFirstPlayerTurn = async (roomid, askFirstPlayer) => {
   id = { roomid, "players.userId": askFirstPlayer.userId };
   fields = { $set: { "players.$.next": true, "players.$.rolled": false } };
   const update = await roomsModel.updateOne(id, fields);
 };
 
+// referenced in passTurn() //actionsServices
 const updateCurrentPlayerTurn = async (roomid, selectProfil) => {
   selectProfil.next = false;
   selectProfil.rolled = true;
@@ -104,6 +108,8 @@ const updateCurrentPlayerTurn = async (roomid, selectProfil) => {
   const update = await roomsModel.updateOne(query, fields);
 };
 //changes status false to true of player's roll property
+
+// referenced in play //actionsServices
 const updatePlayerRoll = async (roomid, userId) => {
   id = { roomid, "players.userId": userId };
   fields = { $set: { "players.$.rolled": true } };
@@ -157,7 +163,6 @@ const addFirstProfil = async (roomid, name, pawn, maxPlayer) => {
   }
 };
 
-
 const joinRoom = async (roomid, name, pawn) => {
   //make a check to prevent the same guy to be able to join the room twice
   let userId = random.randomUuid();
@@ -185,8 +190,6 @@ const joinRoom = async (roomid, name, pawn) => {
   const req = await roomsModel.updateOne(query, fields);
   console.log(chalk.green.inverse("New profil added!"));
 };
-
-
 
 module.exports = {
   getProfils,

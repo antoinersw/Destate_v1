@@ -1,31 +1,22 @@
+import Form from "../components/Form/Form";
 import styles from "./Home.module.css";
 
-export default function Home({ data }) {
+export default function Home() {
   return (
     <>
-      <div className="container">
-        <div className="grid-wrapper">
-          <h1>Empty room Id</h1>
-          <h1>{data}</h1>
 
-          <form action="/">
-            <input type="text" />
-            <input type="text" />
-            <input type="text" />
-            <button>Play</button>
-          </form>
-        </div>
-      </div>
-    </>
+<Form/>
+</>
+
   );
 }
 
-export async function getServerSideProps() {
+// export async function getServerSideProps() {
 
-  const ftc = await fetch("http://localhost:3000/api/rooms/empty");
-  const { emptyRoom } = await ftc.json();
+//   const ftc = await fetch("http://localhost:3000/api/rooms/empty");
+//   const { emptyRoom } = await ftc.json();
 
-  return {
-    props: { data: emptyRoom },
-  };
-}
+//   return {
+//     props: { data: emptyRoom },
+//   };
+// }

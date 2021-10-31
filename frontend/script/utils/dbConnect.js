@@ -7,9 +7,7 @@ let checkConnection = {
 };
 
 const dbConnect = async () => {
-  if (checkConnection.connected === 1) {
-    return;
-  } else {
+
     const db = await mongoose.connect(
       process.env.URL,
       {
@@ -17,10 +15,7 @@ const dbConnect = async () => {
         useUnifiedTopology: true,
       }
     );
-    checkConnection.connected = db.connections[0]._readyState;
     
-  }
-
   console.log(chalk.inverse.green("connected to mongoDB"));
 };
 

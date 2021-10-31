@@ -10,7 +10,7 @@ const random = require("../../script/utils/random");
 //
 const dbConnect = require("../../script/utils/dbConnect");
 
-const player =require("../playersService/playersService");
+const player =require("../playersServices/playersServices");
 
 const saveBuyTx = async (roomid, findBuyer, findPlace) => {
   const txId = random.txHash();
@@ -209,7 +209,7 @@ const play = async (roomid, userId) => {
     return;
   }
   // const roll1 = await rollDice();
-  // //update position
+  //update position
   // await updatePlayerPosition(roll1, selectProfil);
 
   selectProfil.pos = 2;

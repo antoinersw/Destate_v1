@@ -1,4 +1,4 @@
-import { getRoomCapacityValidation } from "../../../../../script/roomsService/roomsService";
+import { getRoomCapacityValidation } from "../../../../script/roomsService/roomsService";
 
 export default async function length(req, res) {
   const { method, query, body } = req;
