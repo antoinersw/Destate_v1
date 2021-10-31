@@ -1,0 +1,9 @@
+body {
+  margin: 0;
+  background: #333;
+}
+h1,
+p,
+span {
+  color: white;
+}

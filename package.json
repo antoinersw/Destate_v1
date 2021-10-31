@@ -1,0 +1,27 @@
+{
+  "name": "destate",
+  "version": "1.0.0",
+  "description": "Objectif: Créer unemap permettant aux agences immobilières d'acheter un district sur lequel posterses annonces. \r Besoin: Real estate companies need to have a better channel to showcase their estate because it'shard to reach potential clients",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest",
+    "server": "nodemon ./server/app.js",
+    "db": "node ./server/utils/dbConnect.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.1",
+    "fs": "0.0.1-security",
+    "prompt": "^1.1.0",
+    "prompts": "^2.4.1",
+    "socket.io": "^4.1.3",
+    "staticmaps": "^1.5.1",
+    "uuid": "^8.3.2",
+    "validator": "^13.6.0",
+    "yargs": "^17.0.1"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
+}
